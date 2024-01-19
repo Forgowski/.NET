@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Krzysztof\\Desktop\\Studia\\projekt na bazy\\BD\\BD\\BD.csproj": {}
+    "C:\\Users\\mst\\source\\repos\\.NET\\BD\\BD.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Krzysztof\\Desktop\\Studia\\projekt na bazy\\BD\\BD\\BD.csproj": {
+    "C:\\Users\\mst\\source\\repos\\.NET\\BD\\BD.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Krzysztof\\Desktop\\Studia\\projekt na bazy\\BD\\BD\\BD.csproj",
+        "projectUniqueName": "C:\\Users\\mst\\source\\repos\\.NET\\BD\\BD.csproj",
         "projectName": "BD",
-        "projectPath": "C:\\Users\\Krzysztof\\Desktop\\Studia\\projekt na bazy\\BD\\BD\\BD.csproj",
-        "packagesPath": "C:\\Users\\Krzysztof\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Krzysztof\\Desktop\\Studia\\projekt na bazy\\BD\\BD\\obj\\",
+        "projectPath": "C:\\Users\\mst\\source\\repos\\.NET\\BD\\BD.csproj",
+        "packagesPath": "C:\\Users\\mst\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\mst\\source\\repos\\.NET\\BD\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Krzysztof\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\mst\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,6 +26,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -40,6 +45,10 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Components.QuickGrid.EntityFrameworkAdapter": {
+              "target": "Package",
+              "version": "[8.0.1, )"
+            },
             "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": {
               "target": "Package",
               "version": "[8.0.0, )"
@@ -57,6 +66,10 @@
               "version": "[8.0.0, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[8.0.0, )"
             }
@@ -80,7 +93,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
