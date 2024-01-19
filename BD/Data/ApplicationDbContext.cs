@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using BD.Models;
 
 namespace BD.Data
 {
@@ -9,5 +10,6 @@ namespace BD.Data
             : base(options)
         {
         }
+        public DbSet<BD.Models.Course> Course { get; set; } = default!;
     }
 }
