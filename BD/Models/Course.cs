@@ -6,11 +6,11 @@ namespace BD.Models
     public class Course
     {
         [Key]
-        public int Id { get; set; }
+        public int CourseId { get; set; }
 
 
         [Column(TypeName = "varchar(50)")]
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
 
         [Column(TypeName = "decimal(10,2)")]
@@ -22,15 +22,15 @@ namespace BD.Models
 
 
         [Column(TypeName = "varchar(30)")]
-        public string Author { get; set; }
+        public string? Author { get; set; }
 
 
         [Column(TypeName = "TEXT")]
-        public string Description { get; set; }
+        public string? Description { get; set; }
         
         
         [Column(TypeName = "varchar(30)")]
-        public string Category { get; set; }
+        public string? Category { get; set; }
         
         
         [Column(TypeName = "int")]
