@@ -1,10 +1,12 @@
 ﻿@model IEnumerable<BD.Models.Course>
 
+<h1>Index</h1>
 @{
     ViewData["Title"] = "Index";
 }
-
-<h1>Index</h1>
+@{
+    var isAdmin = User.IsInRole("Admin");
+}
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -31,11 +33,9 @@
                 @Html.DisplayNameFor(model => model.Category)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Rate)
+                Rate
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.VotesNum)
-            </th>
+
             <th></th>
         </tr>
     </thead>
@@ -61,15 +61,26 @@
                 @Html.DisplayFor(modelItem => item.Category)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Rate)
+            @{
+                        double rate = item.Rate;
+                        int votesNum = item.VotesNum;
+
+                        double result = votesNum != 0 ? Math.Round(rate / votesNum, 2) : 0;
+                        @result
+            }
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.VotesNum)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.CourseId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.CourseId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.CourseId">Delete</a>
+                 <a asp-action="Details" asp-route-id="@item.CourseId">Details</a> 
+                    @if (isAdmin)
+                    {
+                        <span>|</span>
+                        @Html.ActionLink("Edit", "Edit", new { id = @item.CourseId })
+                        ;
+                        <span>|</span>
+                        @Html.ActionLink("Delete", "Delete", new { id = @item.CourseId })
+                        ;
+
+                    }
             </td>
         </tr>
 }

@@ -1,0 +1,24 @@
+﻿@model List<Article>
+
+@{
+    var isAdmin = User.IsInRole("Admin");
+}
+<h2>
+    Contents:
+</h2>
+<ol>
+    @foreach (var article in Model)
+    {
+        <li>@article.Title</li>
+        @if (isAdmin)
+        {
+            <span>|</span>
+            <a asp-action="Edit" asp-route-id="@article.Id">Edit</a>
+            <span>|</span>
+            <a asp-action="Delete" asp-route-id="@article.Id">Delete</a>
+        }
+    }
+</ol>
+                    
+
+        

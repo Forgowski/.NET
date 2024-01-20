@@ -7,26 +7,31 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BD.Data;
 using BD.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BD.Controllers
 {
     public class ArticlesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public ArticlesController(ApplicationDbContext context)
+        public ArticlesController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Articles
+
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Article.Include(a => a.Course);
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Articles/Details/5
+        [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -45,7 +50,15 @@ namespace BD.Controllers
             return View(article);
         }
 
+        public IActionResult GetArticlesByCourseId(int courseId)
+        {
+            var articles = _context.Article.Where(a => a.CourseId == courseId).ToList();
+
+            return PartialView("_ArticlesPartialView", articles);
+        }
+
         // GET: Articles/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             ViewData["CourseId"] = new SelectList(_context.Course, "CourseId", "CourseId");
@@ -56,6 +69,7 @@ namespace BD.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,TextContent,Title,CourseId")] Article article)
         {
@@ -70,6 +84,7 @@ namespace BD.Controllers
         }
 
         // GET: Articles/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -90,6 +105,7 @@ namespace BD.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,TextContent,Title,CourseId")] Article article)
         {
@@ -123,6 +139,7 @@ namespace BD.Controllers
         }
 
         // GET: Articles/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -143,6 +160,7 @@ namespace BD.Controllers
 
         // POST: Articles/Delete/5
         [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
