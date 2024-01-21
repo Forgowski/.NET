@@ -9,6 +9,7 @@ using BD.Data;
 using BD.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+using System.ComponentModel;
 
 namespace BD.Controllers
 {
@@ -53,15 +54,17 @@ namespace BD.Controllers
         public IActionResult GetArticlesByCourseId(int courseId)
         {
             var articles = _context.Article.Where(a => a.CourseId == courseId).ToList();
-
-            return PartialView("_ArticlesPartialView", articles);
+            var sortedArticles = articles.OrderBy(a => a.CourseId).ToList();
+            return PartialView("_ArticlesPartialView", sortedArticles);
         }
 
         // GET: Articles/Create
+        [DisplayName("Add new article")]
         [Authorize(Roles = "Admin")]
-        public IActionResult Create()
+        public IActionResult Create(int id)
         {
-            ViewData["CourseId"] = new SelectList(_context.Course, "CourseId", "CourseId");
+            System.Diagnostics.Debug.WriteLine($"CourseId received: {id}");
+            ViewBag.CourseId = id;
             return View();
         }
 
@@ -71,13 +74,18 @@ namespace BD.Controllers
         [HttpPost]
         [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,TextContent,Title,CourseId")] Article article)
+        public async Task<IActionResult> Create([Bind("TextContent,Title,CourseId")] Article article)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(article);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                return RedirectToAction(nameof(Details));
+
             }
             ViewData["CourseId"] = new SelectList(_context.Course, "CourseId", "CourseId", article.CourseId);
             return View(article);
@@ -132,8 +140,11 @@ namespace BD.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                int courseId = article.CourseId;
+
+                return RedirectToAction("Details", "Courses", new { id = courseId });
             }
+
             ViewData["CourseId"] = new SelectList(_context.Course, "CourseId", "CourseId", article.CourseId);
             return View(article);
         }
@@ -164,15 +175,24 @@ namespace BD.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            int courseId = 0;
             var article = await _context.Article.FindAsync(id);
             if (article != null)
             {
+                courseId = article.CourseId;
                 _context.Article.Remove(article);
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+            if (courseId == 0)
+            {
+                return RedirectToAction("Index", "Courses");
+            }
+            else
+            {
+                return RedirectToAction("Details", "Courses", new { id = courseId });
+            }
+            }
 
         private bool ArticleExists(int id)
         {

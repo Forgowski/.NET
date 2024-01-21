@@ -5,7 +5,10 @@
 }
 @{
     var isAdmin = User.IsInRole("Admin");
+    var courseId = Model.CourseId;
 }
+
+
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 
@@ -65,7 +68,15 @@
         </dd>
     </dl>
 </div>
+<div>
 <div id="articlesContainer" data-course-id="@Model.CourseId">
+</div>
+    <div>
+        @if (isAdmin)
+        {
+            @Html.ActionLink("Add new article", "Create", "articles", new { id = courseId })
+        }
+    </div>
 </div>
 <script>
     var courseId = $('#articlesContainer').data('course-id');
@@ -84,7 +95,6 @@
         }
     });
 </script>
-
 <div>
     @if (isAdmin)
     {

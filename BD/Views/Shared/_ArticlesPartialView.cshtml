@@ -2,6 +2,7 @@
 
 @{
     var isAdmin = User.IsInRole("Admin");
+   
 }
 <h2>
     Contents:
@@ -9,7 +10,8 @@
 <ol>
     @foreach (var article in Model)
     {
-        <li>@article.Title</li>
+        <li>
+            <span>@article.Title</span>
         @if (isAdmin)
         {
             <span>|</span>
@@ -17,8 +19,10 @@
             <span>|</span>
             <a asp-action="Delete" asp-route-id="@article.Id">Delete</a>
         }
+        </li>
+
     }
 </ol>
-                    
+       
 
         
