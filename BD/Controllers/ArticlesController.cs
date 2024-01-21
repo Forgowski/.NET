@@ -10,6 +10,7 @@ using BD.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using System.ComponentModel;
+using System.Security.Claims;
 
 namespace BD.Controllers
 {
@@ -53,8 +54,13 @@ namespace BD.Controllers
 
         public IActionResult GetArticlesByCourseId(int courseId)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var isCourseBought = _context.BuyCourses.Any(bc => bc.CourseId == courseId && bc.UserId == userId);
+
             var articles = _context.Article.Where(a => a.CourseId == courseId).ToList();
             var sortedArticles = articles.OrderBy(a => a.CourseId).ToList();
+
+            ViewBag.IsCourseBought = isCourseBought;
             return PartialView("_ArticlesPartialView", sortedArticles);
         }
 

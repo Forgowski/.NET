@@ -2,6 +2,7 @@
 
 @{
     var isAdmin = User.IsInRole("Admin");
+    var isCourseBought = ViewBag.IsCourseBought ?? false;
    
 }
 <h2>
@@ -12,6 +13,12 @@
     {
         <li>
             <span>@article.Title</span>
+            
+            @if (isCourseBought)
+            {
+                <span>|</span>
+                <a asp-action="Details" asp-route-id="@article.Id">Read article</a>
+            }
         @if (isAdmin)
         {
             <span>|</span>

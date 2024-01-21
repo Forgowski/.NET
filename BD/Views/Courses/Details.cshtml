@@ -97,15 +97,16 @@
     });
 </script>
 
-<h1>@User.FindFirstValue(ClaimTypes.NameIdentifier)</h1>
 @if (User.Identity.IsAuthenticated && !isAdmin)
 {
-    <form method="post" asp-controller="BuyCourses" asp-action="Buy" asp-antiforgery="true">
-        <input type="hidden" name="userId" value="@User.FindFirstValue(ClaimTypes.NameIdentifier)" />
-        <input type="hidden" name="courseId" value="@Model.CourseId" />
-        <input type="submit" value="Buy" />
-    </form>
-
+    @if (!(bool)ViewBag.IsCourseBought)
+    {
+        <form method="post" asp-controller="BuyCourses" asp-action="Buy" asp-antiforgery="true">
+            <input type="hidden" name="userId" value="@User.FindFirstValue(ClaimTypes.NameIdentifier)" />
+            <input type="hidden" name="courseId" value="@Model.CourseId" />
+            <input type="submit" value="Buy" />
+        </form>
+    }
 }
 
 <div>
@@ -113,7 +114,5 @@
     {
         @Html.ActionLink("Edit", "Edit", new { id = @Model.CourseId })
     }
-
-
     <a asp-action="Index">Back to List</a>
 </div>

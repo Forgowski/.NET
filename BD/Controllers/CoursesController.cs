@@ -9,6 +9,7 @@ using BD.Data;
 using BD.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace BD.Controllers
 {
@@ -44,6 +45,12 @@ namespace BD.Controllers
             {
                 return NotFound();
             }
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var isCourseBought = _context.BuyCourses
+                .Any(bc => bc.UserId == userId && bc.CourseId == id);
+
+            ViewBag.IsCourseBought = isCourseBought;
 
             return View(course);
         }
