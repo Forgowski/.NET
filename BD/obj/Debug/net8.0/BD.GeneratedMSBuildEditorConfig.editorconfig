@@ -74,6 +74,30 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXJ0aWNsZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/mst/source/repos/.NET/BD/Views/BuyCourses/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnV5Q291cnNlc1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mst/source/repos/.NET/BD/Views/BuyCourses/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnV5Q291cnNlc1xEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mst/source/repos/.NET/BD/Views/BuyCourses/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnV5Q291cnNlc1xEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mst/source/repos/.NET/BD/Views/BuyCourses/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnV5Q291cnNlc1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mst/source/repos/.NET/BD/Views/BuyCourses/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnV5Q291cnNlc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mst/source/repos/.NET/BD/Views/BuyCourses/MyCourses.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnV5Q291cnNlc1xNeUNvdXJzZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/mst/source/repos/.NET/BD/Views/Courses/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ291cnNlc1xDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 

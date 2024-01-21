@@ -120,7 +120,7 @@ namespace BD.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Courses", new { id = course.CourseId });
             }
             return View(course);
         }

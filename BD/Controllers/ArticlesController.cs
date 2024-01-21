@@ -80,12 +80,9 @@ namespace BD.Controllers
             {
                 _context.Add(article);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            else
-            {
-                return RedirectToAction(nameof(Details));
+                int courseId = article.CourseId;
 
+                return RedirectToAction("Details", "Courses", new { id = courseId });
             }
             ViewData["CourseId"] = new SelectList(_context.Course, "CourseId", "CourseId", article.CourseId);
             return View(article);
