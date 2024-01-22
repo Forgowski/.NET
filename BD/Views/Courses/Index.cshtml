@@ -1,16 +1,18 @@
 ﻿@model IEnumerable<BD.Models.Course>
 
-<h1>Index</h1>
+<h1>All Courses</h1>
 @{
     ViewData["Title"] = "Index";
 }
 @{
     var isAdmin = User.IsInRole("Admin");
 }
-
+@if (isAdmin)
+{
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+}
 <table class="table">
     <thead>
         <tr>
@@ -46,10 +48,14 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Price)
+                @Html.DisplayFor(modelItem => item.Price) zl
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Duration)
+                    @{
+                        int durationInMinutes = item.Duration / 60;
+                        int remainder = item.Duration % 60;
+                    }
+                    @durationInMinutes h @remainder min
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Author)

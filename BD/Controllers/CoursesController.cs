@@ -39,6 +39,7 @@ namespace BD.Controllers
                 return NotFound();
             }
 
+
             var course = await _context.Course
                 .FirstOrDefaultAsync(m => m.CourseId == id);
             if (course == null)
@@ -49,8 +50,12 @@ namespace BD.Controllers
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var isCourseBought = _context.BuyCourses
                 .Any(bc => bc.UserId == userId && bc.CourseId == id);
-
             ViewBag.IsCourseBought = isCourseBought;
+
+            var isCourseRated = _context.RateCourse
+                .Any(rc => rc.UserId == userId && rc.CourseId == id);
+
+            ViewBag.IsCourseRated = isCourseRated;
 
             return View(course);
         }
@@ -60,6 +65,36 @@ namespace BD.Controllers
         public IActionResult Create()
         {
             return View();
+        }
+
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public IActionResult RateCourse(int CourseId, int userRate)
+        {
+            var course = _context.Course.FirstOrDefault(c => c.CourseId == CourseId);
+            if (course != null)
+            {
+                double currentRate = course.Rate;
+                int currentVotesNum = course.VotesNum;
+                currentRate += userRate;
+                currentVotesNum += 1;
+                course.Rate = currentRate;
+                course.VotesNum = currentVotesNum;
+                _context.SaveChanges();
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var rateCourse = new RateCourse
+                {
+                    UserId = userId,
+                    CourseId = CourseId
+                };
+
+                _context.RateCourse.Add(rateCourse);
+                _context.SaveChanges();
+
+
+            }
+            return RedirectToAction("Details", "Courses", new { id = course.CourseId });
         }
 
         // POST: Courses/Create

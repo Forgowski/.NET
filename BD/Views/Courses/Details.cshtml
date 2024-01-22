@@ -13,29 +13,26 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 
-<h1>Details</h1>
-
 <div>
-    <h4>Course</h4>
+    <h1>@Html.DisplayFor(model => model.Name)</h1>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+            
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Price)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Price)
+            @Html.DisplayFor(model => model.Price) zl
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Duration)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Duration)
+            @{
+                int durationInMinutes = Model.Duration / 60;
+                int remainder = Model.Duration % 60;
+            }
+            @durationInMinutes h @remainder min
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Author)
@@ -99,6 +96,25 @@
 
 @if (User.Identity.IsAuthenticated && !isAdmin)
 {
+    @if ((bool)ViewBag.IsCourseBought)
+    {
+        @if (!(bool)ViewBag.IsCourseRated)
+        {
+            <form method="post" asp-controller="Courses" asp-action="RateCourse" asp-antiforgery="true">
+                <input type="hidden" name="CourseId" value="@Model.CourseId" />
+                <div class="form-group">
+                    <label for="userRate">Rate course (1-5):</label>
+                    <input type="number" name="userRate" class="form-control" min="1" max="5" required />
+                </div>
+                <button type="submit" class="btn btn-primary">Rate</button>
+            </form>
+        }
+    }
+}
+
+
+@if (User.Identity.IsAuthenticated && !isAdmin)
+{
     @if (!(bool)ViewBag.IsCourseBought)
     {
         <form method="post" asp-controller="BuyCourses" asp-action="Buy" asp-antiforgery="true">
@@ -112,7 +128,9 @@
 <div>
     @if (isAdmin)
     {
-        @Html.ActionLink("Edit", "Edit", new { id = @Model.CourseId })
+        @Html.ActionLink("Edit Course", "Edit", new { id = @Model.CourseId })
     }
-    <a asp-action="Index">Back to List</a>
+</div>
+<div>
+    <a asp-action="Index">Back to Courses List</a>
 </div>

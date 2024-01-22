@@ -25,14 +25,6 @@ namespace BD.Controllers
             _userManager = userManager;
         }
 
-        // GET: Articles
-
-        public async Task<IActionResult> Index()
-        {
-            var applicationDbContext = _context.Article.Include(a => a.Course);
-            return View(await applicationDbContext.ToListAsync());
-        }
-
         [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
