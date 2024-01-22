@@ -94,6 +94,17 @@
     });
 </script>
 
+@if (isAdmin)
+{
+    @if (!(bool)ViewBag.isQUizCreate)
+{
+    <form method="post" asp-controller="Quiz" asp-action="Create" asp-antiforgery="true">
+        <input type="hidden" name="courseId" value="@Model.CourseId" />
+        <button type="submit" class="btn btn-primary">Create Quiz</button>
+    </form>
+}
+}
+
 @if (User.Identity.IsAuthenticated && !isAdmin)
 {
     @if ((bool)ViewBag.IsCourseBought)

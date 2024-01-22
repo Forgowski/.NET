@@ -39,6 +39,8 @@ namespace BD.Controllers
                 return NotFound();
             }
 
+            bool isQUizCreate = this.QuizWithCourseIdExists((int)id);
+            ViewBag.isQUizCreate = isQUizCreate;
 
             var course = await _context.Course
                 .FirstOrDefaultAsync(m => m.CourseId == id);
@@ -201,7 +203,10 @@ namespace BD.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
+        public bool QuizWithCourseIdExists(int courseId)
+        {
+            return _context.Quiz.Any(q => q.CourseId == courseId);
+        }
         private bool CourseExists(int id)
         {
             return _context.Course.Any(e => e.CourseId == id);
