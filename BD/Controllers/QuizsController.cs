@@ -70,10 +70,47 @@ namespace BD.Controllers
                 
                 await _context.SaveChangesAsync();
 
-                return RedirectToAction("Details", "Courses", new { id = courseId });
-            
- 
+            var savedQuiz = await _context.Quiz.SingleOrDefaultAsync(q => q.CourseId == courseId);
+
+            if (savedQuiz == null)
+            {
+                return NotFound();
+            }
+
+            return RedirectToAction("CreateQuestion", "Quiz", new { quizId = savedQuiz.QuizId });
         }
+        public IActionResult CreateQuestion(int QuizId)
+        {
+            var quiz = _context.Quiz.FirstOrDefault(q => q.QuizId == QuizId);
+
+            if (quiz == null)
+            {
+                return NotFound();
+            }
+
+            int courseId = quiz.CourseId;
+            ViewBag.quizId = QuizId;
+            ViewBag.courseId = courseId;
+            return View();
+        }
+
+        // POST: Questions/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateQuestion([Bind("QuestionId,QuizId,QuestionText,AnswerA,AnswerB,AnswerC,AnswerD,AnswerCorrect,Point")] Question question)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(question);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["QuizId"] = new SelectList(_context.Quiz, "QuizId", "QuizId", question.QuizId);
+            return View(question);
+        }
+
 
         // GET: Quizs/Edit/5
         public async Task<IActionResult> Edit(int? id)
