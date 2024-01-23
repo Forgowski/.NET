@@ -4,6 +4,7 @@ using BD.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BD.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240122215423_boniedziala")]
+    partial class boniedziala
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -135,9 +138,6 @@ namespace BD.Data.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(100)");
 
-                    b.Property<int>("CourseId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Point")
                         .HasColumnType("int");
 
@@ -145,38 +145,32 @@ namespace BD.Data.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(100)");
 
+                    b.Property<int>("QuizId")
+                        .HasColumnType("int");
+
                     b.HasKey("QuestionId");
 
-                    b.HasIndex("CourseId");
+                    b.HasIndex("QuizId");
 
                     b.ToTable("Question");
                 });
 
-            modelBuilder.Entity("BD.Models.QuizResult", b =>
+            modelBuilder.Entity("BD.Models.Quiz", b =>
                 {
-                    b.Property<int>("QuizResultId")
+                    b.Property<int>("QuizId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("QuizResultId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("QuizId"));
 
                     b.Property<int>("CourseId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ResultPoint")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("QuizResultId");
+                    b.HasKey("QuizId");
 
                     b.HasIndex("CourseId");
 
-                    b.HasIndex("UserId");
-
-                    b.ToTable("QuizResult");
+                    b.ToTable("Quiz");
                 });
 
             modelBuilder.Entity("BD.Models.RateCourse", b =>
@@ -437,16 +431,16 @@ namespace BD.Data.Migrations
 
             modelBuilder.Entity("BD.Models.Question", b =>
                 {
-                    b.HasOne("BD.Models.Course", "Course")
+                    b.HasOne("BD.Models.Quiz", "Quiz")
                         .WithMany()
-                        .HasForeignKey("CourseId")
+                        .HasForeignKey("QuizId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Course");
+                    b.Navigation("Quiz");
                 });
 
-            modelBuilder.Entity("BD.Models.QuizResult", b =>
+            modelBuilder.Entity("BD.Models.Quiz", b =>
                 {
                     b.HasOne("BD.Models.Course", "Course")
                         .WithMany()
@@ -454,15 +448,7 @@ namespace BD.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Course");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("BD.Models.RateCourse", b =>

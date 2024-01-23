@@ -1,41 +1,36 @@
-﻿@model IEnumerable<BD.Models.Question>
-
+﻿@model List<BD.Models.Question>
 @{
-    ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    var firstQuestion = Model.FirstOrDefault(); 
 }
-
-<h1>Index</h1>
+<h1>Quiz</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" asp-route-courseId="@firstQuestion.CourseId">Add New Question</a>
 </p>
 <table class="table">
     <thead>
         <tr>
+
             <th>
-                @Html.DisplayNameFor(model => model.Course)
+                @Html.DisplayNameFor(model => firstQuestion.QuestionText)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.QuestionText)
+                @Html.DisplayNameFor(model => firstQuestion.AnswerA)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AnswerA)
+                @Html.DisplayNameFor(model => firstQuestion.AnswerB)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AnswerB)
+                @Html.DisplayNameFor(model => firstQuestion.AnswerC)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AnswerC)
+                @Html.DisplayNameFor(model => firstQuestion.AnswerD)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AnswerD)
+                @Html.DisplayNameFor(model => firstQuestion.AnswerCorrect)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AnswerCorrect)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Point)
+                @Html.DisplayNameFor(model => firstQuestion.Point)
             </th>
             <th></th>
         </tr>
@@ -43,9 +38,7 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Course.CourseId)
-            </td>
+
             <td>
                 @Html.DisplayFor(modelItem => item.QuestionText)
             </td>
@@ -69,7 +62,6 @@
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.QuestionId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.QuestionId">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.QuestionId">Delete</a>
             </td>
         </tr>

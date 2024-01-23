@@ -14,7 +14,7 @@ namespace BD.Data
         public DbSet<BD.Models.Article> Article { get; set; } = default!;
         public DbSet<BD.Models.BuyCourses> BuyCourses { get; set; } = default!;
         public DbSet<BD.Models.RateCourse> RateCourse { get; set; } = default!;
-        public DbSet<BD.Models.Quiz> Quiz { get; set; } = default!;
         public DbSet<BD.Models.Question> Question { get; set; } = default!;
+        public DbSet<BD.Models.QuizResult> QuizResult { get; set; } = default!;
     }
 }

@@ -9,9 +9,9 @@ namespace BD.Models
         public int QuestionId { get; set; }
 
         [Required]
-        [ForeignKey("Quiz")]
-        public required int QuizId { get; set; }
-        public Quiz? Quiz { get; set; }
+        [ForeignKey("Course")]
+        public int CourseId { get; set; }
+        public Course Course { get; set; }
 
         [Required]
         [Column(TypeName = "varchar(100)")]

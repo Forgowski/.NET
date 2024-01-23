@@ -1,0 +1,45 @@
+﻿@model List<BD.Models.Question>
+
+<h1>Quiz</h1>
+@{
+    int maxPoint = 0;
+}
+
+<form asp-action="TakeQuiz" method="post">
+    <input type="number" name="courseId" id="courseId" value="@Model[0].CourseId" hidden readonly />
+    @for (var i = 0; i < Model.Count; i++)
+    {
+        var question = Model[i];
+        <div>
+            <h4>@question.QuestionText</h4>
+            <div>
+            <input type="radio" id="@question.AnswerA" name="@question.QuestionId" value="@question.AnswerA" />
+            <label for="@question.AnswerA">
+                @question.AnswerA
+            </label>
+            </div>
+            <div>
+            <input type="radio" id="@question.AnswerB" name="@question.QuestionId" value="@question.AnswerA" />
+            <label for="@question.AnswerB">
+                @question.AnswerB
+            </label>
+            </div>
+            <div>
+            <input type="radio" id="@question.AnswerC" name="@question.QuestionId" value="@question.AnswerA" />
+            <label for="@question.AnswerC">
+                @question.AnswerC
+            </label>
+            </div>
+            <div>
+            <input type="radio" id="@question.AnswerD" name="@question.QuestionId" value="@question.AnswerA" />
+            <label for="@question.AnswerD">
+                @question.AnswerD
+            </label>
+            </div>
+        </div>
+        maxPoint += (int)@question.Point;
+    }
+    <p>Max Point: @maxPoint</p>
+
+    <button type="submit">Submit</button>
+</form>

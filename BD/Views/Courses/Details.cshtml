@@ -94,16 +94,28 @@
     });
 </script>
 
+
 @if (isAdmin)
 {
-    @if (!(bool)ViewBag.isQUizCreate)
+    @if (!(bool)ViewBag.isQuizCreate)
+    {
+        <a asp-controller="Questions" asp-action="Create" asp-route-courseId="@Model.CourseId" class="btn btn-primary">Create Quiz</a>
+    }
+    else
+    {
+        <form method="post" asp-controller="Questions" asp-action="ShowQuiz" asp-antiforgery="true">
+            <a asp-controller="Questions" asp-action="ShowQuiz" asp-route-courseId="@Model.CourseId" class="btn btn-primary">Go to Quiz</a>
+        </form>
+    }
+}
+else
 {
-    <form method="post" asp-controller="Quiz" asp-action="Create" asp-antiforgery="true">
-        <input type="hidden" name="courseId" value="@Model.CourseId" />
-        <button type="submit" class="btn btn-primary">Create Quiz</button>
-    </form>
+    @if ((bool)ViewBag.IsCourseBought)
+    {
+        <a asp-controller="Questions" asp-action="TakeQuiz" asp-route-courseId="@Model.CourseId" class="btn btn-primary">Take Exam</a>
+    }
 }
-}
+
 
 @if (User.Identity.IsAuthenticated && !isAdmin)
 {
