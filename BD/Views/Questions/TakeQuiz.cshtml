@@ -3,6 +3,7 @@
 <h1>Quiz</h1>
 @{
     int maxPoint = 0;
+    var userScore = ViewBag.UserScore ?? 0;
 }
 
 <form asp-action="TakeQuiz" method="post">
@@ -39,7 +40,11 @@
         </div>
         maxPoint += (int)@question.Point;
     }
+    <div>
+    @if(@userScore>0){
+    <p>Your Best Score: @userScore</p>
+    }
     <p>Max Point: @maxPoint</p>
-
+    </div>
     <button type="submit">Submit</button>
 </form>

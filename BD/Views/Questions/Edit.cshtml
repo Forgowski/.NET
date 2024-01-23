@@ -15,10 +15,10 @@
         <form asp-action="Edit">
 
             <div class="form-group">
-                <input asp-for="QuestionId" class="form-control" value="@ViewBag.questionId" readonly />
+                <input asp-for="QuestionId" class="form-control" value="@ViewBag.questionId" readonly hidden/>
             </div>
             <div class="form-group">
-                <input asp-for="CourseId" class="form-control" value="@ViewBag.courseId" readonly />
+                <input asp-for="CourseId" class="form-control" value="@ViewBag.courseId" readonly hidden/>
             </div>
             <div class="form-group">
                 <label asp-for="QuestionText" class="control-label"></label>

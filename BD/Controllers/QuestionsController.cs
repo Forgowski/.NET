@@ -46,11 +46,17 @@ namespace BD.Controllers
         [Authorize]
         public async Task<IActionResult> TakeQuiz(int courseId)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var questions = await _context.Question
                 .Where(q => q.CourseId == courseId)
                 .OrderBy(q => q.QuestionId)
                 .ToListAsync();
-
+            var quizResult = await _context.QuizResult
+                .FirstOrDefaultAsync(q => q.CourseId == courseId && q.UserId == userId);
+            if (quizResult != null)
+            {
+                ViewBag.UserScore = quizResult.ResultPoint;
+            }
             return View(questions);
         }
 

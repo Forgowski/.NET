@@ -112,7 +112,16 @@ else
 {
     @if ((bool)ViewBag.IsCourseBought)
     {
-        <a asp-controller="Questions" asp-action="TakeQuiz" asp-route-courseId="@Model.CourseId" class="btn btn-primary">Take Exam</a>
+        @if ((bool)ViewBag.isQuizCreate)
+        {
+            <a asp-controller="Questions" asp-action="TakeQuiz" asp-route-courseId="@Model.CourseId" class="btn btn-primary">Take Exam</a>
+        }
+        @if (ViewBag.UserScore != null)
+        {
+            <div>
+                Your score: @ViewBag.UserScore / @ViewBag.MaxScore
+            </div>
+        }
     }
 }
 

@@ -58,6 +58,23 @@ namespace BD.Controllers
             ViewBag.IsCourseRated = isCourseRated;
             bool isQuizCreate = this.QuestionWithCourseIdExists((int)id);
             ViewBag.isQuizCreate = isQuizCreate;
+            var quizResult = await _context.QuizResult
+                .FirstOrDefaultAsync(q => q.CourseId == id && q.UserId == userId);
+            if (quizResult != null)
+            {
+                ViewBag.UserScore = quizResult.ResultPoint;
+                var questions = await _context.Question
+                    .Where(q => q.CourseId == id)
+                    .OrderBy(q => q.QuestionId)
+                    .ToListAsync();
+                int maxScore = 0;
+                foreach (var question in questions)
+                {
+                    maxScore += (int)question.Point;
+
+                }
+                ViewBag.MaxScore = maxScore;
+            }
 
             return View(course);
         }
